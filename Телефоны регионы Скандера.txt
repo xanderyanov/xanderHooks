@@ -1,0 +1,67 @@
+
+<script charset="utf-8" src="http://api-maps.yandex.ru/1.1/index.xml" type="text/javascript"></script>
+
+$(document).ready(function() {
+
+    if (YMaps.location.region != '') {
+            var youRegion = (YMaps.location.region);
+            var youTown = (YMaps.location.city);
+            if (youRegion === "Саратовская область"){
+                $('.regPhone2').text('8 (8452) 39-50-09');
+            }
+            else if (youRegion === "Московская область"){
+                $('.regPhone2').text('8 (495) 104-34-88');
+            }
+            else if (youTown === "Москва"){
+                $('.regPhone2').text('8 (495) 104-34-88');
+            }
+            else if (youTown === "Санкт-Петербург"){
+                $('.regPhone2').text('8 (812) 385-07-50');
+            }
+            else if (youRegion === "Ленинградская область"){
+                $('.regPhone2').text('8 (812) 385-07-50');
+            }
+
+            else if (youRegion === "Пермский край"){
+                $('.regPhone2').text('8 (342) 207-43-27');
+            }
+            else if (youRegion === "Свердловская область"){
+                $('.regPhone2').text('8 (343) 289-25-59');
+            }
+            else if (youRegion === "Республика Башкортостан"){
+                $('.regPhone2').text('8 (347) 225-00-51');
+            }
+            else if (youRegion === "Челябинская область"){
+                $('.regPhone2').text('8 (351) 217-06-36');
+            }
+            else if (youRegion === "Новосибирская область"){
+                $('.regPhone2').text('8 (383) 285-28-87');
+            }
+            else if (youRegion === "Красноярский край"){
+                $('.regPhone2').text('8 (391) 216-54-12');
+            }
+            else if (youRegion === "Воронежская область"){
+                $('.regPhone2').text('8 (473) 202-47-62');
+            }
+            else if (youRegion === "Нижегородская область"){
+                $('.regPhone2').text('8 (831) 217-05-17');
+            }
+            else if (youRegion === "Республика Татарстан"){
+                $('.regPhone2').text('8 (843) 211-05-99');
+            }
+            else if (youRegion === "Самарская область"){
+                $('.regPhone2').text('8 (846) 201-21-07');
+            }
+            else if (youRegion === "Ростовская область"){
+                $('.regPhone2').text('8 (863) 310-03-63');
+            }
+            else {
+                $('.regPhone2').text('8 (495) 104-34-88');
+            }
+        }
+
+
+
+
+
+});

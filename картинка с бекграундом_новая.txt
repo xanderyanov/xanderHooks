@@ -1,0 +1,1354 @@
+*************************************************************************
+Сниппет проверки нескольких тв на пустоту
+<?php
+if(!empty(trim($input))) return $then;
+
+вызов: [[notEmpty? &input=`[[+ONE]][[+TWO]]` &then=`NOT EMPTY`]]
+**************************************************************************
+
+Вывод опций на странице товара
+Например, опция, обозванная density
+[[+density.caption]]: [[+density.value]]
+
+##############################################################
+
+[[*image:!empty=`выводим сюда все что хотим, если картинка есть`]]
+
+
+######################################
+
+Оформление вызова левого меню с стрелочкой у родительских пунктов и не выводить дочерние у родителя с id=9
+<nav class="leftMenu__area">
+  [[pdoMenu?
+      &outerClass=`leftMenu`
+    	&level=`4`
+    	&parents=`0`
+    	&levelClass=`lm-lev`
+    	&hideSubMenus=`1`
+    	&sortdir=`ASC`
+	    &sortby=`menuindex`
+	    &tplParentRow=`@INLINE <li [[+classes]]><a href="[[+link]]" class="hasInnerLm">[[+menutitle]]<div class="goInnerLm"></div></a></li>[[+wrapper]]`
+	    &where=`[{"parent:!=":"9"}]`
+    ]]        
+</nav>
+
+############################################################################
+
+[[pdoField? &id=`[[*id]]` &field=`pagetitle` &top=`2` ]] - получим pagetitle дедушки
+
+
+###################################################################################
+
+<a href="tel:[[+phone:replace=` ==`]]" class="contactUs__link">[[+phone]]</a>
+
+####################################
+&where=`[{"template:=":"11","AND:brand:=":"[[*id]]"}]`
+аналогично
+&where=`{"template:=": 11}`
+&tvFilters=`brand===[[*id]]`
+
+Это при условии, что тв формируется из ресурсов путем запроса из базы. Отображается как название - но попадает в тв значение id
+
+@SELECT pagetitle, id FROM x265n_site_content WHERE parent=1
+
+или
+
+
+
+
+
+###################################################################################
+Вывод элементов в тегах (например в select/option)
+
+Создаем тв-параметр - строку и вносим туда элементы, разделяя их запятой (к примеру).
+
+Потом в нужном месте на странице выводим скрипт (он разбивает строку на массив, основывваясь на разделителе - и выводит каждый элемент в нужной конструкции)
+
+<script>
+    var sizeStr="[[*size]]";
+    var splitter = /\s*,\s*/;
+    var sizeArray = sizeStr.split(splitter);
+
+    sizeArray.forEach(function(item, i, sizeArray) {
+      document.write ('<option class="product__dimensions-option" value="'+item+'">'+item+'</option>');
+    });
+
+</script>
+
+
+
+
+
+
+#################################################################################
+Открываем таблицу mod_users в phpMyAdmin (или что там у вас стоит для управления базой) и меняем значения полей на эти:
+
+password: kXXEPN9pTwdXnaSlDvUzaJcR2y/1XzCqs9AXcxOzFdQ=
+salt: 18de7acfa078ec932d6d09f18cf0dbac
+
+Теперь пароль password321
+
+Если админ заблокировался (всякое бывает), то ставим в поле active цифру 1.
+
+Сброс блокировки пароля в MODX
+При нескольких не правильных попытках ввода пароля MODX блокирует учетную запись админа. Чтобы разблокировать нужен доступ к БД. Заходим в phpmyadmin и в таблице modx_user_attributes в поле blockeduntil (учетной записи админа, Default admin account) меняем значение на 0 (ноль) и сохраняем. Блокировка снята.
+
+
+
+#################################################################################
+
+Не разворачивать пункты подменю у родителя с id=9 (к примеру)
+[[pdoMenu?
+	&outerClass=`topMenu`
+	&level=`2`
+	&parents=`0`
+	&levelClass=`lev`
+	&where=`[{"parent:!=":"9"}]`
+]]
+
+
+#################################################################################
+
+Настройка перенаправления на https на хостинге SprinterHost
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+
+##########################################################################################
+<a href="[[*imgCover]]" class="fancybox" data-fancybox data-caption="[[*pagetitle]]">
+	<img src="[[pthumb? &input=`[[*imgCover]]` &options=`w=250&far=T&zc=1`]]" alt="[[*pagetitle]]">
+</a>
+
+
+####################################################################
+
+
+<!--
+
+Why, hello! Thanks for taking a look at our code.
+This site was designed and built by...
+
+
+ .d8888b.   .d8888b.       888 d8b          d8b 888             888
+d88P  Y88b d88P  Y88b      888 Y8P          Y8P 888             888
+888    888      .d88P      888                  888             888
+Y88b. d888     8888"   .d88888 888  .d88b.  888 888888  8888b.  888
+ "Y888P888      "Y8b. d88" 888 888 d88P"88b 888 888        "88b 888
+       888 888    888 888  888 888 888  888 888 888    .d888888 888
+Y88b  d88P Y88b  d88P Y88b 888 888 Y88b 888 888 Y88b.  888  888 888
+ "Y8888P"   "Y8888P"   "Y88888 888  "Y88888 888  "Y888 "Y888888 888
+                                        888
+                                   Y8b d88P
+                                    "Y88P"
+
+
+For more info, visit 93digital.co.uk.
+
+-->
+
+##################################################################
+
+Перевод сайта через гугл переводчик
+
+<a href="javascript://" onclick="window.location.href='https://translate.google.ru/translate?hl=ru&amp;sl=ru&amp;tl=en&amp;u='+window.location+''"><img src="https://diall.ru/wp-content/uploads/2011/07/eng.gif" border="0"></a>
+
+##############################################################################
+
+<!--noindex--><a href="[[+link]]" class="class" rel="nofollow" target="_blank">Анкор</a><!--/noindex-->
+
+
+#############################################################
+
+<body  oncopy="return false">
+
+
+###############################################################
+
+Запрос к безе данных для поиска значений, например в чекбоксах тв-параметра, чтобы связать документы
+
+@SELECT pagetitle, id FROM modx_site_content WHERE parent=7 - Выведет pagetitle у всех дочерних ресурса 7
+
+@SELECT concat(pagetitle,' (',description,')'), id FROM xdr257_site_content WHERE parent=9      - Выведет pagetitle + description у всех дочерних ресурса 9
+
+делал на SPA LOUNGE
+
+
+
+###############################################################
+Условие на родителя
+[[*parent:is=`10`:then=``:else=`<div class="title"><h3>Видеогалерея</h3></div>`]]
+
+###############################################################
+Водяной знак в шаблоне Gallery - картинка генерируется при первом вызове страницы - может быть очень долго
+<div class="swiper-slide swiper-slide2">
+    <a data-fancybox="group" data-caption="[[+name]]" href="[[pthumb? &input=`[[+image_absolute]]` &options=`&zc=С&fltr[]=wmi|/assets/img/watermark.png|C|50`]]" style="background-image: url([[+thumbnail]]);">
+        <img src="assets/img/a4.png" alt="1">
+    </a>
+</div>
+
+###############################################################
+
+    $(".header__title h1").each(function () {
+        var length = $(this).text().replace(/^\s+|\s+$|\(|\)|8-/gm, '').length;
+        console.log(length);
+
+            if (length > 50) {
+                $(".header__title h1").css('font-size', 26 + 'px');
+            }
+            else if (length > 20) {
+                $(".header__title h1").css('font-size', 30 + 'px');
+            }
+            else {
+                $(".header__title h1").css('font-size', 40 + 'px');
+            }
+    });
+
+
+#####################################################
+
+
+
+<div class="content__inner">
+        [[*template:neq=`11`:then=`
+            [[$pageTitle]]
+        `]]
+        
+        [[*template:in=`11`:then=`
+            [[$pageTitleCategories]]
+        `]]
+        
+        [[*template:inarray=`4, 12, 13`:then=`
+            [[$article]]
+        `]]
+        [[*template:in=`15`:then=`
+            [[$fotogallery]]
+        `]]
+        [[*template:in=`16`:then=`
+            [[$lk]]
+        `]]
+        [[*template:in=`18`:then=`
+            [[$news]]
+        `]]
+        [[*template:in=`5`:then=`
+            [[$afisha]]
+        `]]
+        [[*template:in=`6`:then=`
+            [[$blog]]
+        `]]
+        [[*template:in=`9`:then=`
+            [[$control]]
+        `]]
+        [[*template:in=`2`:then=`
+            [[$contactDetails]]
+        `]]
+        [[*template:in=`10`:then=`
+            [[$menu]]
+        `]]
+        [[*template:in=`11`:then=`
+            [[$menuCategory]]
+        `]]
+        [[*template:in=`7`:then=`
+            [[$cart]]
+            [[$deliveryInfo]]
+        `]]
+        [[*template:in=`8`:then=`
+            [[$orderForm]]
+        `]]
+    </div>
+
+
+[[*parent:in=`12`:then=`
+            [[$breadcrumbs]]
+        `]]
+
+
+
+
+Интересует товар: [[*pagetitle]] со страницы [[++site_url]][[~[[*id]]]]
+
+
+
+
+[[*albumName:isnot=``:then=`[[$gallery]]`:else=``]]
+
+[[*isfolder:is=`1`:then=``:else=`[[$catalogLinks]]`]]
+##############################################
+
+default_media_source - источник файлов по умолчанию
+
+
+
+#################################################
+#Переадресация со старых адресов страниц на новые
+RewriteCond %{REQUEST_URI} ^/lash-i-brow/$
+RewriteRule ^.*$ https://nika-style64.ru/narashhivanie-resnicz/? [R=301,L]
+
+##################################################
+
+
+
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteRule (.*) https://styleintextile.ru/$1 [L,R=301]
+
+
+[[*albumName:isnot=``:then=`[[$gallery]]`:else=``]]
+
+
+
+###########################################Кнопка
+
+<div id="pdopage">
+            [[!+page.nav]]
+            <div class="blog rows">
+                [[!pdoPage?
+                    &element=`pdoResources`
+                    &parents=`[[*id]]`
+                    &tpl=`blogTpl`
+                    &includeTVs=`imgCover`
+                    &pageLimit=`8`
+                    &ajaxElemWrapper=`#pdopage`
+                    &sortby=`publishedon`
+                    &sortdir=`DESC`
+                    &processTVs=`1`         ////////Обязательный параметр, иначе картинки не подтягиваются - путь теряется при подкрузке
+                    &limit=`2`
+                    &ajaxMode=`button`
+                    &ajaxTplMore =`@INLINE <div class="blogRedmore__outer ajaxRedmoreOuter"><span class="btn btn-default btn-more blogRedmore">Загрузить еще</span></div>`
+                    
+                ]]
+            </div>
+        </div>
+
+############################################################Пагинация
+
+<div id="pdopage">
+            <div class="blog rows">
+                [[!pdoPage?
+                    &element=`pdoResources`
+                    &parents=`[[*id]]`
+                    &tpl=`blogTpl`
+                    &includeTVs=`imgCover`
+                    &pageLimit=`8`
+                    &ajaxElemWrapper=`#pdopage`
+                    &sortby=`publishedon`
+                    &sortdir=`DESC`
+                    &ajaxMode=`default`
+                    &limit=`8`
+                    &tplPage=`@INLINE <li><a href="[[+href]]">[[+pageNo]]</a></li>`
+                    &tplPageWrapper=`@INLINE <div class="pagin"><ul class="pagination">[[+prev]][[+pages]][[+next]]</ul></div>`
+                    &tplPageActive=`@INLINE <li class="active"><a href="[[+href]]">[[+pageNo]]</a></li>`
+                    &tplPageFirst=`@INLINE <li class="control"><a href="[[+href]]">[[%pdopage_first]]</a></li>`
+                    &tplPageLast=`@INLINE <li class="control"><a href="[[+href]]">[[%pdopage_last]]</a></li>`
+                    &tplPagePrev=`@INLINE <li class="control"><a href="[[+href]]">&#9668;</a></li>`
+                    &tplPageNext=`@INLINE <li class="control"><a href="[[+href]]">&#9658;</a></li>`
+                    &tplPageSkip=`@INLINE <li class="disabled"><span>...</span></li>`
+                    
+                ]]
+            </div>
+        </div>
+        [[!+page.nav]]
+#######################################################
+
+[[*imgCover:isnot=``:then=`<img src="[[pthumb? &input=`[[*imgCover]]` &options=`w=125&far=C&zc=C&q=95`]]" alt="[[*pagetitle]]">`:else=``]]
+
+[[*sPhotoBig:isnot=``:then=`<img src="[[pthumb? &input=`[[*sPhotoBig]]` &options=`w=320&far=C&zc=C&q=95`]]" alt="[[*pagetitle]]">`:else=``]]
+
+sPhotoBig
+
+########################################################
+
+
+Поворот блока{
+    -webkit-transform: skewY(-10deg);
+    -ms-transform: skewY(-10deg);
+    transform: skewY(-10deg);
+}
+
+#########################################################
+<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+<script>
+if ($(".map__area").length) {
+    ymaps.ready(init);
+
+    function init () {
+
+        var myMap = new ymaps.Map("map", {
+            center: [51.533,46.039],
+            zoom: 11,
+            controls: ['zoomControl']
+        });
+        myMap.behaviors.disable('scrollZoom');
+
+
+        var myGeoObjects = [];
+
+        myGeoObjects[0] = new ymaps.Placemark([51.633,46.139],{
+            clusterCaption: 'Заголовок',
+            hintContent: 'Саратовремонт!',
+            balloonContentBody: 'Текст в балуне'
+        },{
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            iconImageHref: 'assets/img/mapmarker.png',
+            // Размеры метки.
+            iconImageSize: [30, 45],
+            // Смещение левого верхнего угла иконки относительно
+            // её «ножки» (точки привязки).
+            iconImageOffset: [-20, -47]
+        });
+
+        myGeoObjects[1] = new ymaps.Placemark([51.233,46.539],{
+            clusterCaption: 'Заголовок',
+            hintContent: 'Саратовремонт!',
+            balloonContentBody: 'Текст в балуне'
+        },{
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            iconImageHref: 'assets/img/mapmarker.png',
+            // Размеры метки.
+            iconImageSize: [30, 45],
+            // Смещение левого верхнего угла иконки относительно
+            // её «ножки» (точки привязки).
+            iconImageOffset: [-20, -47]
+        });
+
+        myGeoObjects[2] = new ymaps.Placemark([51.533,46.039],{
+            clusterCaption: 'Заголовок',
+            hintContent: 'Саратовремонт!',
+            balloonContentBody: 'Текст в балуне'
+        },{
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            iconImageHref: 'assets/img/mapmarker.png',
+            // Размеры метки.
+            iconImageSize: [30, 45],
+            // Смещение левого верхнего угла иконки относительно
+            // её «ножки» (точки привязки).
+            iconImageOffset: [-20, -47]
+        });
+
+        var clusterIcons=[{
+            href:'/images/pointer.png',
+            size:[31,40],
+            offset:[0,0]
+        }];
+
+        var clusterer = new ymaps.Clusterer({
+            clusterDisableClickZoom: false,
+            clusterOpenBalloonOnClick: false,
+            // Устанавливаем стандартный макет балуна кластера "Карусель".
+            clusterBalloonContentLayout: 'cluster#balloonCarousel',
+            // Устанавливаем собственный макет.
+            //clusterBalloonItemContentLayout: customItemContentLayout,
+            // Устанавливаем режим открытия балуна.
+            // В данном примере балун никогда не будет открываться в режиме панели.
+            clusterBalloonPanelMaxMapArea: 0,
+            // Устанавливаем размеры макета контента балуна (в пикселях).
+            clusterBalloonContentLayoutWidth: 300,
+            clusterBalloonContentLayoutHeight: 200,
+            // Устанавливаем максимальное количество элементов в нижней панели на одной странице
+            clusterBalloonPagerSize: 5,
+            // Настройка внешего вида нижней панели.
+            // Режим marker рекомендуется использовать с небольшим количеством элементов.
+            clusterBalloonPagerType: 'marker',
+            // Можно отключить зацикливание списка при навигации при помощи боковых стрелок.
+            // clusterBalloonCycling: false,
+            // Можно отключить отображение меню навигации.
+            // clusterBalloonPagerVisible: false
+        });
+
+        clusterer.add(myGeoObjects);
+        myMap.geoObjects.add(clusterer);
+    }
+
+}
+</script>
+
+
+#######################################################
+
+закрыть переменную searched  в robots.txt
+
+Disallow: /*searched=*
+
+########################################################################################################
+
+ <textarea name="uMessage" required="required" placeholder="Сообщение *" class="contactForm__text tovarNoneTExtInfo">Интересует товар: [[*pagetitle]] со страницы [[++site_url]][[~[[*id]]]]</textarea>
+
+
+########################################################################################################
+
+Адаптивное видео в YouTube
+Для того чтобы сделать видео из YouTube адаптивным, нужно сделать следующее:
+1) Вставить тэг iframe с видео в <div class="myvideo">...</div>, то есть сделать так:
+<div class="myvideo">
+<iframe width="560" height="315" src="//www.youtube.com/embed/kPYBn8VcdXk" frameborder="0" allowfullscreen></iframe>
+</div>
+2) В стилевой файл прописать такой код:
+.myvideo {
+position:relative;
+padding-bottom:56.25%;
+padding-top:30px;
+height:0;
+overflow:hidden;
+border:1px solid #ccc;
+}
+.myvideo iframe,.myvideo object,.myvideo embed {
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+}
+После этого наше видео станет адаптивным:
+
+
+################################################
+
+Выборка - не выводить документы с шаблонами 4 и 10
+[[pdoMenu?
+		&parents=`0`
+		&outerClass=`adaptiveMenu`
+		&levelClass=`alev`
+		&where=`[{"template:!=":"4","AND:template:!=":"10"}]`
+
+	]]
+
+
+############################################
+<div class="logo1">
+    [[*id:is=`1`:then=``:else=`<a href="/">`]]
+        <img src="assets/img/logo1.jpg" alt="Сигма Трейд">
+    [[*id:is=`1`:then=``:else=`</a>`]]
+    
+</div>
+
+
+#########################################################
+
+<div class="ok1" style="position: fixed; left: 0; top: 0; background: #fff; font: 18px/22px Arial;" >OK</div>
+
+[[*imgCover:isnot=``:then=`<img src="[[pthumb? &input=`[[*imgCover]]` &options=`w=125&far=C&zc=C&q=95`]]" alt="[[*pagetitle]]">`:else=``]]
+
+$_SERVER['DOCUMENT_ROOT'].'/
+
+
+Интересует товар: [[*pagetitle]] со страницы [[++site_url]][[~[[*id]]]]
+
+
+
+
+
+
+
+<div class="" style="z-index: 9999; position: fixed; width: 100%; height: 50px; background: #fff; text-align: center; font: 18px/50px Arial; color: #f00;">Внимание! На сайте профилактические работы. Для заказа продукции звоните по телефонам, указанным в контактах. Спасибо за понимание!</div>
+
+
+[[!pdoResources?
+	&parents=`4`
+	&depth=`1`
+	&tpl=`tpl.category`
+	&includeTVs=`photo_category`
+	&where=`{"template:=": 6}`
+]]
+
+
+##############################################
+<div class="tile-background">
+	<img src="http://www.abfacility.sk/wp-content/uploads/2014/08/tile-energy.jpg" alt="tile-energy" title="tile-energy">
+</div>
+
+
+.tile-background {
+	overflow: hidden;
+}
+
+.tile-background img {
+	position: relative;
+}
+
+.tile-background img {
+	width: 100%;
+	transition: transform 0.8s ease-out;
+}
+
+.main-service-tile:hover .tile-background img {
+	-webkit-transform: scale(1.3, 1.3) rotate(5deg);
+	-moz-transform: scale(1.3, 1.3) rotate(5deg);
+	-ms-transform: scale(1.3, 1.3) rotate(5deg);
+	-o-transform: scale(1.3, 1.3) rotate(5deg);
+	transform: scale(1.3, 1.3) rotate(5deg);
+}
+
+##################################################
+
+[[pdoField? &id=`1` &field=`address`]]
+
+
+#######################################################
+ns1.beget.com
+ns2.beget.com
+ns1.beget.pro
+ns2.beget.pro
+
+
+####################################
+DELETE FROM `modx_manager_log`       удаляет все из таблицы
+######################################
+
+text-overflow: ellipsis;
+
+############################################
+
+
+[[pdoResources?
+	&tpl=`tour2levelTpl`
+	&sortby=`menuindex`
+	&sortdir=`ASC`
+	&parents=`[[*id]]`
+	&includeTVs=`img-cover, eliteTour, oneDayTourTime`
+	&where=`{"oneDayTourTime:!=":"semiDay","OR:oneDayTourTime:IS":null}` - если тв чекбокс выбран другой или не выбран вообще
+]]
+
+###########################################################
+
+<!--[if lte IE 8]>
+  <section id="old-ie" class="container-fluid">
+    <div class="container">
+      <h3>Вы используете устаревший браузер!</h3>
+      <p>Чтобы использовать все возможности современных сайтов, загрузите и установите один из этих браузеров:</p>
+      <div class="download-browsers row">
+        <div class="download-firefox col-xs-3">
+          <a href="https://www.mozilla.org/ru/firefox/new/" rel="nofollow"><i class="bi bi-firefox"></i><br>Скачать Firefox</a>
+        </div>
+        <div class="download-chrome col-xs-3">
+          <a href="https://www.google.ru/intl/ru/chrome/" rel="nofollow"><i class="bi bi-chrome"></i><br>Скачать Chrome</a>
+        </div>
+        <div class="download-opera col-xs-3">
+          <a href="http://www.opera.com/ru" rel="nofollow"><i class="bi bi-opera"></i><br>Скачать Opera</a>
+        </div>
+        <div class="download-ie col-xs-3">
+          <a href="http://windows.microsoft.com/ru-ru/internet-explorer/download-ie" rel="nofollow"><i class="bi bi-ie"></i><br>Скачать Internet Explorer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <![endif]-->
+
+##################################################
+Убрать скролл сайта при открытом popup - проверено на рацко
+1. в .css добавить
+
+.overflowhidecs {overflow: hidden !important;}
+
+
+2. и сам код 
+
+
+$(document).ready(function(e) {
+      $('.player-onli').click(function(){
+          $('#playerokno').fadeIn('fast');
+          $('body').addClass('overflowhidecs');
+      });
+      $('.close').click(function(){
+          $('#playerokno').fadeOut('fast');
+          $('body').removeClass('overflowhidecs');
+      });
+  });
+
+
+###########################################################
+<div class="lastNews__item">
+        [[+tv.img-cover:isnot=``:then=`<img src="[[pthumb? &input=`[[+tv.img-cover]]` &options=`w=125&far=C&zc=1`]]" alt="[[*pagetitle]]">`:else=``]]
+    <span>[[+publishedon:date=`%d.%m.%Y`]]</span>
+    <a href="[[~[[+id]]]]">[[+pagetitle]]</a>
+    <p>[[+introtext]]</p>
+</div>
+
+
+
+[[!*mainObjectImg:isnot=``:then=`<img src="[[*mainObjectImg]]" alt="[[*pagetitle]]">`:else=``]]
+
+[[!+tv.img-cover:isnot=``:then=`<img src="[[+tv.img-cover]]" alt="[[+pagetitle]]">`:else=``]]
+
+
+[[!+tv.imgCover:isnot=``:then=`<img src="[[pthumb? &input=`[[+tv.imgCover]]` &options=`w=183&h=183&far=C&zc=1`]]" alt="[[+pagetitle]]">`:else=``]]
+
+############################################################
+
+Вывод меню - без крайних элементов - только папки.
+[[pdoMenu?
+        	&parents=`0`
+        	&level=`4`
+        	&where=`{"isfolder":1}`
+
+        ]]
+
+############################################################
+
+Вывод Даты на страницу
+[[*publishedon:strtotime:date=`%d.%m.%Y`]]
+
+############################################################ - проверенный 09/12/2017
+<div class="breadcrumbs__area">
+	<div class="breadcrumbs">
+		<div><a href="#">Главная&nbsp</a></div>
+		&raquo;
+		<div><a href="#">Категория&nbsp</a></div>
+		&raquo;
+		<div><span>Текущий пункт</span></div>
+	</div>
+</div>
+
+.breadcrumbs__area {
+  display: block;
+  margin: 20px 0;
+}
+.breadcrumbs {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #000;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.breadcrumbs div {
+  margin: 0 5px;
+}
+.breadcrumbs div a {
+  color: #000;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-decoration: none;
+  display: flex;
+  position: relative;
+}
+.breadcrumbs div a:hover {
+  color: #3C8CDB;
+}
+
+.breadcrumbs div span {
+  color: #3C8CDB;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-decoration: none;
+  display: block;
+  position: relative;
+}
+
+
+
+
+<div class="breadcrumbs__area">
+[[pdoCrumbs?
+        &limit=`10`
+        &showCurrent=`1`
+        &showHome=`1`
+        &showAtHome=`0`
+        &showHidden=`0`
+        &outputSeparator=` » `
+        &tplWrapper=`@INLINE <div class="breadcrumbs">[[+output]]</div>`
+        &tpl=`@INLINE <div class="breadcrumbsInner"><a href="[[+link]]">[[+menutitle]]</a></div>`
+        &tplCurrent=`@INLINE <div  class="breadcrumbsCurrent"><span>[[+menutitle]]</span></div>`
+        &tplMax=`@INLINE <div class="breadcrumbsMax"><span>&nbsp;...&nbsp;</span></div>`
+        &tplHome=`@INLINE <div class="breadcrumbsHome"><a href="[[+link]]">Главная</a></div>`
+      ]]
+</div>
+############################################################
+
+MIGX
+[[getImageList?
+  &tvname=`afisha`
+  &tpl=`Tpl`
+  &docid=`338`
+  &limit=`3`
+  &sort=`[{"sortby":"data","sortdir":"ASC"}]`
+  &where=`{"data:>":"[[!today]]"}`
+]]
+
+############################################################################
+
+/[\0\x0B\t\n\r\f\a&=+%#<>"~:`@,.!("«»');\?\[\]\{\}\|\^'\\]/
+
+
+###############Стилизация списка OL LI#######################################################
+ol {
+    counter-reset:li; /* Инициализируем счетчик */
+    padding:0; /* Удаляем  установленное по умолчанию левое поле*/
+    list-style:none; /* Отменяем нумерацию установленную по умолчанию */
+  }
+  ol li {
+      position:relative; /* Создаем контекст для позиционирования элементов */
+      margin:0 0 6px 2em; /* Даем каждому элементу списка отступ слева, что бы освободить пространство для нумерации */
+      padding:4px 8px;
+      border-top:2px solid #666;
+      background:#f6f6f6;
+      }
+  ol li:before {
+      content:counter(li); /* В качестве данных используем счетчик */
+      counter-increment:li; /* Увеличиваем значение счетчика на 1 */
+      /* Позиционируем и оформляем цифры */
+      position:absolute;
+      top:-2px;
+      left:-2em;
+      width:2em;
+      padding:4px 0;
+      border-top:2px solid #666;
+      color:#fff;
+      background:#666;
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+      }
+
+###################################################################################################################################################
+<div id="map" style="width:100%; height:445px"></div>
+<script type="text/javascript">
+    var map;
+    function initMap() {
+//        var myLat = Number("[[*latitude]]");
+//        var myLng = Number("[[*longitude]]");
+        var myLat = 51.492135;
+        var myLng = 46.11853;
+//        var myImg = "[[++site_url]][[*projectCoverImg]]";
+        var myLatLng = {lat: myLat, lng: myLng};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: myLatLng,
+            scrollwheel: false
+        });
+        var contentString = '[[*pagetitle]]';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        var image = 'tpl/img/marker1.png';
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            //position: {lat: -33.890, lng: 151.274},
+            map: map,
+            title: 'Hello World!',
+            icon: image
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5JiEj2FMH3VFXVDLla5mP6AWWW6qBUV4&callback=initMap">
+</script>
+
+
+
+
+
+############################################################################################################################################################
+
+
+
+MigX пагинация есть на klinikstar.ru
+ 
+ 
+ [[!msProducts?
+                        &tpl=`my.tpl.catalog.row`
+                        &limit=`9`
+                        &depth=`5`
+                        &sortby=`RAND()` - рандом
+                        &parents=`7`
+                        &includeThumbs=`212x190,800x600`
+                        &showZeroPrice=`0`
+                        &where=`{"Data.popular":1}`
+
+                    ]]
+
+
+
+редирект с страницы на страницу
+
+RewriteCond %{REQUEST_URI} ^/dostavka-sushi-v-g.-saratov-na-dom.html
+RewriteRule ^.*$ http://xatiko.ru/dostavka.html? [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/sushi-na-dom-s-dostavkoj.html
+RewriteRule ^.*$ http://xatiko.ru/dostavka.html? [R=301,L]
+*****************************************************************************************************************************************************
+
+Чанк tpl.msEmail.new.manager
+[[+address.receiver]] — Покупатель
+[[+address.phone]] — Телефон
+[[+user.email]] — Почта
+[[+address.index]] — Индекс
+[[+address.region]] — Область
+[[+address.city]] — Город
+[[+address.street]] — Улица
+[[+address.building]] — Дом
+[[+address.room]] — Квартира
+[[+delivery.name]] — Способ доставки
+[[+payment.name]] — Тип оплаты
+[[+address.comment]] — Комментрарий
+
+{"statusObj:is":null}
+&where=`{"statusObj:is":null}`
+
+
+
+
+Убираем вложенность в .htaccess
+RewriteRule ^.*/([^/]*)\.html$ /$1 [R=301,L]
+
+
+
+
+[[!*statusObj:is:null:then=`&where=`{"statusObj:is":null}`:else=`&where=`{"statusObj:!=":null}`]]
+
+
+<li>
+    <a href="[[+url]]" class="fancybox" data-fancybox-group="gallery"><img src="[[+540x520]]" alt='[[+pagetitle]]' title='[[+pagetitle]]'/></a>
+</li>
+
+############################
+[[+tv.imgCover:!empty=`<img src="[[+tv.imgCover:phpthumbof=`w=125&h=125&far=C&zc=1&q=95`]]" alt='[[+pagetitle]]' title='[[+pagetitle]]'/>`]]
+############################
+[[*template:in=`1`:then=`[[$slider]][[$servicesHome]]`]]
+
+<h1>[[!*longtitle:isnot=``:then=`[[*longtitle]]`:else=`[[*pagetitle]]`]]</h1>
+
+ВЫВОД В ШАБЛОНЕ!!!!!!!!!!!!!!!!!!
+<span>[[+longtitle:isnot=``:then=`[[+longtitle]]`:else=`[[+pagetitle]]`]]</span>
+<h2>[[+longtitle:isnot=``:then=`[[+longtitle]]`:else=`[[+pagetitle]]`]]</h2>
+
+<h1>[[!*longtitle:isnot=``:then=`[[*longtitle]]`:else=`[[*pagetitle]]`]]</h1>
+
+[[!+tv.img-cover:isnot=``:then=`<img src="[[+tv.img-cover:phpthumbof=`w=290&h=180&far=T&zc=1`]]" alt='[[+pagetitle]]' title='[[+pagetitle]]'/>`:else=``]]
+
+<img src="[[pthumb? &input=`[[+tv.img-cover]]` &options=`w=225&h=220&far=T&zc=1`]]" alt="[[+pagetitle]]">
+
+	Если в спане нет кода или текста - меняем стиль контейнера
+	if ($('.img-conainer-desc span').html() == '') {
+		$('.img-conainer-desc').css({'display':'none'});
+	}
+	
+	
+	Альтернатива: - не совсем корректно
+	if ($('.img-conainer-desc span').length) {
+		//console.log(wH);
+		//выполнить
+	} else {
+		$('.img-conainer-desc').css({'display':'none'});
+	}
+	
+	По корректнее
+	if (!$('.img-conainer-desc span').length) {
+		$('.img-conainer-desc').css({'display':'none'});
+	} 
+	
+	
+
+
+
+
+
+
+
+Удаление localstorage
+Работает с simpleCart.js - когда надо очищать корзину после отправки заказа. Если вставить этот скрипт в шаблон успешного заказа (прямо в код), то удаляются данные, добавленные в корзину
+<script>
+	(function() {
+		localStorage.removeItem('simpleCart_items');
+	})();
+</script>
+
+Второй вариант - оставляет инфу на странице корзины. Далее вставить скрипт.
+<script>
+	(function() {
+		localStorage.setItem('simpleCart_orderSuccess', 'true');
+	
+	})();
+</script>
+
+
+Это надо добавить в файл скриптов: (оставляет инфу на странице с адресом - а при переходе на другие - удаляет)
+var orderSuccess = localStorage.getItem("simpleCart_orderSuccess");
+	var currentUrl = window.location.href;
+	if (orderSuccess == 'true' && currentUrl != 'http://pizza-donna.ru/korzina') {
+		localStorage.setItem('simpleCart_orderSuccess', 'false');
+		localStorage.removeItem('simpleCart_items');
+	}
+
+
+
+
+
+
+
+Добавление  каждому пункту меню определенного участка кода
+    $('.topmenu li').each(function(i){
+        i++;
+        $(this).append('<img class="tmli-bg" id="tm-img'+i+'" src="/templates/main/images/tm/tm'+i+'.png" />');   
+    })
+    
+    // Right menu:
+    $('.rightmenu > li').each(function(i){
+        i++;
+        $(this).css('background','url("templates/main/images/icons/rm/l'+i+'.png") left 4px no-repeat');    
+    })
+
+
+Title -
+pdoTools
+
+Version - 
+2.2.4-pl
+
+Код вызова - (мой!)
+[[pdoSitemap?
+    &checkPermissions=`list`
+    &priorityTV=`priority`
+    &includeTVs=`changefreq,priority`
+    &tplWrapper=`@INLINE <?xml version="1.0" encoding="[[++modx_charset]]"?><?xml-stylesheet type="text/xsl" href="assets/xsl/sitemap.xsl"?><urlset xmlns="[[+schema]]">[[+output]]</urlset>`
+    &tpl=`@INLINE <url> <loc>[[+url]]</loc> <lastmod>[[+date]]</lastmod> <changefreq>[[+changefreq]]</changefreq> <priority>[[+priority]]</priority></url>`
+]]
+
+
+
+
+
+<link rel="stylesheet" href="tpl/css/main.css?v3"/>
+
+
+
+
+
+[[+old_price:!empty=`<span class="price1">Цена: [[+old_price]] Р</span>`]]
+<!--<span class="price1">Цена: [[+old_price]] Р</span>-->
+[[*discount:!empty=`<span class="discount">Скидка [[*discount]]%</span>`]]
+<!--<span class="discount">Скидка [[*discount]]%</span>-->
+
+
+[[+slink:notempty:then=`<a href="http://[[+slink]]" target="_blank" rel="nofollow"><img src="[[+logo]]" alt='[[+name]]'></a>`:else=`<img src="[[+logo]]" alt='[[+name]]'>`]]
+
+[[if? &is=`[*skidka*]:!empty` &then=`<div class="skidka1">[*skidka*] %</div>` &else=``]]
+
+    На кукси в новостях
+	&tplPaginateNext=`@CODE:<a href='[+url+]' class='ditto_next_link'>&rarr;</a>`
+    &tplPaginatePrevious=`@CODE:<a href='[+url+]' class='ditto_previous_link'>&larr;</a>`
+
+
+
+
+Положить дамп рядом с www
+Зайти под SSH и выполнить команду - импорт базы будет сделан (мгновенно почти)
+mysql -urcnachuser -pdPfKoSMU rcnachalobase <nachlorcbd.sql
+
+
+
+
+$('.products li').hover(
+        function(){
+            $(this).find('.box').addClass('full');    
+        },
+        function(){
+            $(this).find('.box').removeClass('full'); 
+        }
+    )
+
+
+
+
+
+
+
+************ПОДКЛЮЧЕНИЕ КАЛЕНДАРЯ************
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+$(function() {
+    $( "#datepicker" ).datepicker({
+    'monthNames' : ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+    'dayNames': ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"], // For formatting
+    'dayNamesShort': ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Сбт"], // For formatting
+    'dayNamesMin': ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+    'dateFormat' : 'dd.mm.y',
+	'firstDay': 1
+    });
+});
+</script>
+
+
+
++ стили скорректировать, если календарь большой (подключаются ниже стилей календаря основных - чтобы переопределили)
+
+
+#datepicker, #datepicker a, table.ui-datepicker-calendar thead tr th, table.ui-datepicker-calendar thead tr th a, .ui-datepicker table, .ui-widget
+{  font-size : 8pt;  line-height: 10pt;}
+.ui-datepicker td span, .ui-datepicker td a{	padding: 3px;}
+
+********************************************
+
+
+
+<link rel="canonical" href="[[++site_url]][[~[[*id]]]]" />
+
+
+
+ <nav class="breadcrumbs-area">
+                      [[pdoCrumbs?
+                        &limit=`10`
+                        &showCurrent=`1`
+                        &showHome=`1`
+                        &showAtHome=`0`
+                        &showHidden=`0`
+                        &outputSeparator=` » `
+                        &tplWrapper=`@INLINE <ul class="breadcrumb">[[+output]]</ul>`
+                        &tpl=`@INLINE <li><a href="[[+link]]">[[+menutitle]]</a></li>`
+                        &tplCurrent=`@INLINE <li><span>[[+menutitle]]</span></li>`
+                        &tplMax=`@INLINE <li><span>&nbsp;...&nbsp;</span></li>`
+                        &tplHome=`@INLINE <li><a href="[[+link]]">Главная</a></li>`
+                        &outputSeparator=``
+                      ]]
+                    </nav>
+.breadcrumbs-area{border-bottom: 1px solid #000;}
+.breadcrumb{overflow: hidden;list-style: none;margin-bottom: 5px;}
+.breadcrumb li{float: left;}
+.breadcrumb li:before{color: #000;content: "»";font-size: 18px;padding: 0 5px;}
+.breadcrumb li:first-child:before{color: #000;content: "";font-size: 18px;padding: 0 5px;}
+.breadcrumb li span{}
+.breadcrumb li a{}					
+					
+
+
+
+
+<a href="[[~[[+id]]]]">
+
+<a href="[[~[[+id]]]]"><img src="[[+tv.img-cover1:phpthumbof=`w=200&h=180&far=T&zc=1`]]" alt="[[+pagetitle]]" title="[[+pagetitle]]"/><p>[[+pagetitle]]</p></a>
+
+
+
+
+
+
+
+
+$('blockquote')
+    .prepend('<div><div class="quote-line clearfix"><div class="line-l"></div><div class="quote">«</div><div class="line-r"></div></div></div>')
+    .append('<div><div class="quote-line clearfix"><div class="line-l"></div><div class="quote">»</div><div class="line-r"></div></div></div>');
+
+
+
+
+
+В хедер вставить, и сайт не будет индексироваться)
+<meta name="robots" content="noindex, nofollow"/>
+
+
+
+Картинка в бордере: (не прибавляется к размеру блока)
+.div{
+	border-image-source: url(../img/border-bg.jpg);
+    border-image-slice: 5 5 5 5;
+    border-image-width: 5px;
+    border-image-repeat: repeat;
+}
+
+<a title="[+title+]" class="fancybox" rel="group" href="[+link+]" style="background: url(../[+url+]) center center; background-size: cover;"><span><p>[+title+]</p></span></a>
+
+<a title="[+title+]" class="fancybox" rel="group" href="[+link+]"><img src="../[[phpthumb? &input=`[+url+]` &options=`w=160,h=110,zc=C,q=75`]]"><span><p>[+title+]</p></span></a>
+
+
+
+
+
+
+
+
+
+
+со страницы <a href="[(site_url)][*alias*]">[*pagetitle*]-[*longtitle*]</a>
+
+
+<a href="[+image+]" class="fancybox" rel="group" title="[+title+]">
+	<img src="[[phpthumb? &input=`[+image+]` &options=`w=312,h=180,far=T,zc=C,q=95`]]" alt="[+alt+]" title="[+title+]"/>
+	<div class="imginfo">
+		<p>[+picdate+]</p>
+		<span>[+title+]</span>
+	</div>
+</a>
+ 
+
+редирект с русского на нерусский
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^xn--80aeaqyqabddh7mpb.xn--p1ai$
+RewriteRule ^(.*)$ http://pravovolga.ru/$1 [R=301,L]
+
+
+
+[[Wayfinder? &startId=`15` &level=`1` &outerClass=`outerClass` &sortBy=`menuindex`]]
+
+
+
+внутренняя тень белая:
+
+-webkit-box-shadow: inset 0px 0px 5px 0px rgba(242, 237, 242, 1);
+	-moz-box-shadow: inset 0px 0px 5px 0px rgba(242, 237, 242, 1);
+	box-shadow: inset 0px 0px 5px 0px rgba(242, 237, 242, 1);
+
+
+
+
+$('a.fancybox').fancybox({
+		closeBtn  : false,
+		arrows    : true,
+		nextClick : true,
+		//padding : 0, - выводит заголовок картинки
+		helpers : {
+                overlay : {
+                    locked: false //Страница не скачет при закрытии
+                },
+				thumbs : {
+				height : 60,
+				width: 100
+			}
+            },
+
+		});
+
+		
+	альт большой картинки	
+$("a[href$='.jpg'], a[href$='.png'], a[href$='.gif']").fancybox({
+//		helpers:{
+//			title:{
+//				type:'over'
+//			}
+//		},
+//		padding:'0',
+		beforeShow:function () {
+			var imgAlt=$(this.element).find("img").attr("alt");
+			var dataAlt=$(this.element).data("alt");
+			var linkAlt=$(this.element).attr("alt");  //если нет фотки (оно бекграундом) - то альт задать самой ссылке
+			if (imgAlt) {
+				$(".fancybox-image").attr("alt",imgAlt);
+			} else if (dataAlt) {
+				$(".fancybox-image").attr("alt",dataAlt);
+			}
+			else if (linkAlt) {
+				$(".fancybox-image").attr("alt",linkAlt);  
+			}
+			$(".fancybox-image").attr("title",imgTitle); //если тайтл самой фотки не выводится
+		}
+	});
+	
+	
+	
+//	Открытие большого изображения с прокруткой
+	$('a[rel="imginfo"]').fancybox({
+		autoSize: false,
+		fitToView: false,
+		openEffect  : 'fade',
+		closeEffect : 'fade',
+		nextEffect  : 'fade',
+		prevEffect  : 'fade',
+		caption : {
+		  type : 'inside'
+		},
+		helpers : {
+		  thumbs : true
+		}
+  	});
+	
+	
+	
+		
+Сортировка DITTO по tv параметру +sort+		
+[!Ditto? &tpl=`ditto-tpl` &parents=`[*id*]` &display=`500` &paginate=`1` &hideFolders=`1` &depth=`2` &noResults=`Раздел в разработке` &extenders=`request` &orderBy=`sort ASC`!]		
+		
+
+<span class="B_crumbBox">
+			<span class="B_firstCrumb">
+				<a class="B_homeCrumb" href="/" title="Главная">Главная</a>
+			</span>  &rarr;  
+			<a class="B_crumb" href="/nash-personal.html" title="Наш персонал">Список новостей</a>  &rarr;  
+			<span class="B_lastCrumb">
+				<span class="B_currentCrumb">Заголовок одной новости
+				</span>
+			</span>
+</span>
+
+
+[!Ditto? &tpl=`blog-tpl` &parents=`[*id*]` &dateSource=`pub_date` &dateFormat=`%d.%m.%Y` &display=`5` &paginate=`1``!]
+
+<div id="pagin">
+				[+previous+][+pages+][+next+]
+				<!--<a href='/katalog-uslug.html?start=20' class='ditto_previous_link'>&larr;</a><a class='ditto_page' href='/katalog-uslug.html?start=0'>1</a><a class="spliter">..</a><a class='ditto_page' href='/katalog-uslug.html?start=10'>2</a><a class='ditto_page' href='/katalog-uslug.html?start=20'>3</a><span class='ditto_currentpage'>4</span><a class='ditto_page' href='/katalog-uslug.html?start=40'>5</a><a class='ditto_page' href='/katalog-uslug.html?start=50'>6</a><a class="spliter">..</a><a class='ditto_page' href='/katalog-uslug.html?start=120'>13</a><a href='/katalog-uslug.html?start=40' class='ditto_next_link'>&rarr;</a>-->
+</div>
+
+
+
+<a href="[~[+id+]~]" class="blog-title">[+pagetitle+]</a>
+
+transition: all 300ms cubic-bezier(0.59, 0.59, 0.59, 0.59) 0s;
+
+
+$(".fancybox").fancybox({
+          
+            helpers : {
+                overlay : {
+                    locked: false //Страница не скачет при закрытии
+                }
+            }
+        });
+		
+		
+		
+		
+.вращение картинки img{
+display: block;
+position: absolute;
+height: 200px;
+width: 200px;
+z-index: 30;
+
+-webkit-transition-duration: 0.8s;
+-moz-transition-duration: 0.8s;
+-o-transition-duration: 0.8s;
+transition-duration: 0.8s;
+-webkit-transition-property: -webkit-transform;
+-moz-transition-property: -moz-transform;
+-o-transition-property: -o-transform;
+transition-property: transform;
+overflow: hidden;
+}
+
+.вращение картинки:hover img{
+-webkit-transform: rotate(360deg);
+-moz-transform: rotate(360deg);
+-o-transform: rotate(360deg);
+}
+
+
+
+<div id="recentcomments" class="dsq-widget">
+	<script type="text/javascript" src="http://xatikonew.disqus.com/recent_comments_widget.js?num_items=3&hide_avatars=0&avatar_size=32&excerpt_length=200"></script></div>
+	
+	
+	
+	
+[[ajaxSubmit? &container=`#ajaxForm` &noJQuery=`1`]]
+<div id="ajaxForm">
+		[!eForm? &amp;formid=`form1` &amp;to=`alex-tn@yandex.ru, stmp-msk@mail.ru` &amp;subject=`Сообщение с сайта` &amp;tpl=`form1tpl` &amp;thankyou=`form1thx` &amp;report=`form1report`!]
+	
+</div>

@@ -1,0 +1,118 @@
+.mainSlider{
+  width: 100%;
+}
+.swiper-container1 {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.swiper-slide1 {
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 500px;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper__cadr{
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+}
+
+.swiper__inner1{
+  background: rgba(17,85,48,.75);
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.75);
+  width: 100%;
+  max-width: 400px;
+}
+.swiper__title1{
+  color: #fefefe;
+  font-family: Cuprum;
+  font-size: 36px;
+  font-weight: 700;
+  text-transform: uppercase;
+  /*text-align: center;*/
+  margin-bottom: 10px;
+}
+.swiper__text1{
+  color: #fefefe;
+  font-family: Cuprum;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 400;
+  /*text-align: center;*/
+  margin-bottom: 20px;
+}
+.swiper__link1{
+  text-align: right;
+}
+.swiper__link1 a{
+  display: inline-block;
+  background-color: #bababa;
+  border-radius: 8px;
+  color: #175e39;
+  font-family: Cuprum;
+  font-size: 24px;
+  font-weight: 400;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: all .3s;
+}
+.swiper__link1 a:hover{
+  background: #1a996a;
+  color: #fff;
+}
+
+.swiper-button-prev1 {
+  background: rgba(17,85,48,.2);
+  width: 42px;
+  height: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  top: 50%;
+  margin-top: -39px;
+  font-size: 30px;
+}
+.swiper-button-next1 {
+  background: rgba(17,85,48,.2);
+  width: 42px;
+  height: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  top: 50%;
+  margin-top: -39px;
+  font-size: 30px;
+}
+
+.swiper-pagination1{
+  bottom: 30px !important;
+}
+
+.swiper-pagination-bullet{
+  opacity: 1;
+  width: 18px;
+  height: 18px;
+  background-color: #b8b8b8;
+  border: 2px solid #115530;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 18px;
+  height: 18px;
+  background-color: #115530;
+  background-color: #115530;
+}

@@ -1,0 +1,45 @@
+
+
+Спринтхост - редирект на https на сайте автовыкупа
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+####################################################################
+
+спринтхост - редирект на https и перенаправление в папку
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+RewriteCond %{HTTP_HOST} ^tumashev\.ru$ [NC]
+RewriteRule ^$ https://tumashev.ru/lp [R=301,L]
+
+
+
+
+
+########################################################
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)\ HTTP/
+RewriteRule ^(.*)index\.(php|html|htm)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www.site-a\.ru$ [NC]
+RewriteRule ^(.*)$ https://site-a.ru/$1 [R=301,L]
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{SERVER_PORT} !^443$ 
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+
+
+###################################################################
+а вот этот вариант работает на centrglass
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)\ HTTP/
+RewriteRule ^(.*)index\.(php|html|htm)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteRule (.*) https://centrglass.ru/$1 [L,R=301]
