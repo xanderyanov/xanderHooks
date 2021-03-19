@@ -1,3 +1,36 @@
+***********************************************************************
+
+Изменение поведения верхнего меню в зависимости от прокрутки и ресайза
+
+var topLine3;
+var header3;
+var header3Height;
+
+function FNheader3() {
+  topLine3 = $(".topLine3__area").height();
+  header3 = $(".header3__area");
+  header3Height = $(".header3__area").height();
+}
+$(function () {
+  FNheader3();
+  $(window).on("resize", FNheader3);
+
+  $(window).scroll(function () {
+    if ($(window).width() > 600) {
+      if ($(this).scrollTop() > topLine3) {
+        header3.css({ position: "fixed", top: "0", left: "0" });
+        $(".header3__fake").css({ height: header3Height });
+      } else if ($(this).scrollTop() <= topLine3) {
+        header3.css({ position: "relative" });
+        $(".header3__fake").css({ height: "0" });
+      }
+    }
+  });
+}
+
+
+*****************************************************************
+
 Всем добрый день! Прошу помощи в вопросе: Есть дерево процедур и дерево специалистов, которые делают эти процедуры. У специалиста Выбираются процедуры через tv-параметр путем запроса к БД. 
 В процедурах выводятся специалисты, у которых выбрана эта процедура путем PdoResources с вот такой выборкой: 
 
